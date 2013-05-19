@@ -148,8 +148,8 @@ class xBlueSpiral(ptResponder):
                 self.consecutive = 0
                 ageSDL[SDLBSConsecutive.value] = (self.consecutive,)
                 #incase the door got left open
-                respBSDoorOps.run(self.key, state="close", fastforward=1)
-                print "xBlueSpiral.OnServerInitComplete(): Empty Age - self.consecutive = %d" % (self.consecutive)
+                ##respBSDoorOps.run(self.key, state="close", fastforward=1)
+                ##print "xBlueSpiral.OnServerInitComplete(): Empty Age - self.consecutive = %d" % (self.consecutive)
 
             #except:
             #    self.consecutive = 0
@@ -163,6 +163,10 @@ class xBlueSpiral(ptResponder):
             ageSDL.sendToClients(SDLBSConsecutive.value)
             ageSDL.setNotify(self.key, SDLBSKey.value, 0.0)
             ageSDL.setNotify(self.key, SDLBSConsecutive.value, 0.0)
+            #Force Door Open
+            respBSDoorOps.run(self.key, state="open")
+            respBSSymbolSpin.run(self.key, state="fwdstop")
+            #End Force 
 
     ###########################
     def OnSDLNotify(self,VARname,SDLname,playerID,tag):

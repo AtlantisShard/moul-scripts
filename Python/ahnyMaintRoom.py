@@ -183,10 +183,15 @@ class ahnyMaintRoom(ptResponder):
         
         elif id == RespAdvanceUse.id:
             ageSDL = PtGetAgeSDL()
-            
+           
             if diffsphere == 0:
-                RespAdvanceUse.run(self.key,state="down0")
-                self.SphereDifference()
+                if SphereNum.value == 1:
+                    ageSDL["ahnyCurrentSphere"] = ((SphereNum.value + 1),)
+                    self.SphereDifference()
+                    print "Sphere rotating"
+                else:
+                    RespAdvanceUse.run(self.key,state="down0")
+                    self.SphereDifference() 
             else:
                 if diffsphere == 1:
                     RespAdvanceUse.run(self.key,state="down1")

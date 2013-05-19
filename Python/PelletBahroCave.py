@@ -2,7 +2,7 @@
 """ *==LICENSE==*
 
 CyanWorlds.com Engine - MMOG client, server and tools
-Copyright (C) 2011  Cyan Worlds, Inc.
+Copyright (C) 2011 Cyan Worlds, Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,11 +11,11 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Additional permissions under GNU GPL version 3 section 7
 
@@ -34,12 +34,12 @@ the parts of OpenSSL and IJG JPEG Library used as well as that of the covered
 work.
 
 You can contact Cyan Worlds, Inc. by email legal@cyan.com
- or by snail mail at:
-      Cyan Worlds, Inc.
-      14617 N Newport Hwy
-      Mead, WA   99021
+or by snail mail at:
+Cyan Worlds, Inc.
+14617 N Newport Hwy
+Mead, WA 99021
 
- *==LICENSE==* """
+*==LICENSE==* """
 """
 Module: PelletBahroCave.py #----->Formerly BahroCave02.py
 Age: PelletBahroCave #----->Formerly BahroCave02
@@ -61,23 +61,23 @@ import time
 
 symbolStates = ['State 1','State 2','State 3','State 4','State 5','State 6','State 7']
 
-SDLGotPellet   = ptAttribString(1,"SDL: got pellet")
-RespDropPellet   = ptAttribResponder(2,"resp: got pellet",['upper','lower'],netForce=1)
-RespFadeInPellet   = ptAttribResponder(3,"resp: fade-in pellet",netForce=1)
-RespPlayDud   = ptAttribResponder(4,"resp: pellet dud",netForce=1)
-RespPlayBubbles   = ptAttribResponder(5,"resp: pellet bubbles",['Hi','Med','Low'],netForce=1)
-RespPlaySteam   = ptAttribResponder(6,"resp: pellet steam",['Hi','Med','Low'],netForce=1)
-RespPlayOrangeGlow   = ptAttribResponder(7,"resp: pellet orange glow",['Hi','Med','Low'],netForce=1)
-RespPlayBoom   = ptAttribResponder(8,"resp: pellet explosion",['Hi','Med','Low'],netForce=1)
-RespPlayWhiteGlow   = ptAttribResponder(9,"resp: pellet white glow",netForce=1)
-RespSymbolOnN   = ptAttribResponder(10,"resp: N symbol on",statelist=symbolStates,netForce=1)
-RespSymbolOffN   = ptAttribResponder(11,"resp: N symbol off",statelist=symbolStates,netForce=1)
-RespSymbolOnE   = ptAttribResponder(12,"resp: E symbol on",statelist=symbolStates,netForce=1)
-RespSymbolOffE   = ptAttribResponder(13,"resp: E symbol off",statelist=symbolStates,netForce=1)
-RespSymbolOnS   = ptAttribResponder(14,"resp: S symbol on",statelist=symbolStates,netForce=1)
-RespSymbolOffS   = ptAttribResponder(15,"resp: S symbol off",statelist=symbolStates,netForce=1)
-RespSymbolOnW   = ptAttribResponder(16,"resp: W symbol on",statelist=symbolStates,netForce=1)
-RespSymbolOffW   = ptAttribResponder(17,"resp: W symbol off",statelist=symbolStates,netForce=1)
+SDLGotPellet = ptAttribString(1,"SDL: got pellet")
+RespDropPellet = ptAttribResponder(2,"resp: got pellet",['upper','lower'],netForce=1)
+RespFadeInPellet = ptAttribResponder(3,"resp: fade-in pellet",netForce=1)
+RespPlayDud = ptAttribResponder(4,"resp: pellet dud",netForce=1)
+RespPlayBubbles = ptAttribResponder(5,"resp: pellet bubbles",['Hi','Med','Low'],netForce=1)
+RespPlaySteam = ptAttribResponder(6,"resp: pellet steam",['Hi','Med','Low'],netForce=1)
+RespPlayOrangeGlow = ptAttribResponder(7,"resp: pellet orange glow",['Hi','Med','Low'],netForce=1)
+RespPlayBoom = ptAttribResponder(8,"resp: pellet explosion",['Hi','Med','Low'],netForce=1)
+RespPlayWhiteGlow = ptAttribResponder(9,"resp: pellet white glow",netForce=1)
+RespSymbolOnN = ptAttribResponder(10,"resp: N symbol on",statelist=symbolStates,netForce=1)
+RespSymbolOffN = ptAttribResponder(11,"resp: N symbol off",statelist=symbolStates,netForce=1)
+RespSymbolOnE = ptAttribResponder(12,"resp: E symbol on",statelist=symbolStates,netForce=1)
+RespSymbolOffE = ptAttribResponder(13,"resp: E symbol off",statelist=symbolStates,netForce=1)
+RespSymbolOnS = ptAttribResponder(14,"resp: S symbol on",statelist=symbolStates,netForce=1)
+RespSymbolOffS = ptAttribResponder(15,"resp: S symbol off",statelist=symbolStates,netForce=1)
+RespSymbolOnW = ptAttribResponder(16,"resp: W symbol on",statelist=symbolStates,netForce=1)
+RespSymbolOffW = ptAttribResponder(17,"resp: W symbol off",statelist=symbolStates,netForce=1)
 
 respListSymbolsOn = [RespSymbolOnN,RespSymbolOnE,RespSymbolOnS,RespSymbolOnW]
 respListSymbolsOff = [RespSymbolOffN,RespSymbolOffE,RespSymbolOffS,RespSymbolOffW]
@@ -89,6 +89,8 @@ lowerCave = 0
 sdlSolutions = []
 chronSolutions = []
 SymbolsOnSecs = 0.0
+prune = 0
+kTimeWarp = 600
 
 #contants
 sdlSolutionNames = ["plltImagerSolutionN","plltImagerSolutionE","plltImagerSolutionS","plltImagerSolutionW"]
@@ -134,7 +136,7 @@ class PelletBahroCave(ptResponder):
             if self.sceneobject.isLocallyOwned():
                 self.ShowSymbols()
         except:
-            print "ERROR!  Couldn't get the solution information, symbols won't appear"
+            print "ERROR! Couldn't get the solution information, symbols won't appear"
 
         linkmgr = ptNetLinkingMgr()
         link = linkmgr.getCurrAgeLink()
@@ -164,24 +166,20 @@ class PelletBahroCave(ptResponder):
                     entry.save()
                     avatar = PtGetLocalAvatar()
                     avatar.avatar.registerForBehaviorNotify(self.key)
-                else:
-                    return
+# else:
+# return
             else:
-                return
-            
+                gotPellet = 0
             try:
                 ageSDL = PtGetAgeSDL()
             except:
                 print "PelletBahroCave.OnServerInitComplete():\tERROR---Cannot find the PelletBahroCave Age SDL"
                 ageSDL[SDLGotPellet.value] = (0,)
-        
             ageSDL.setNotify(self.key,SDLGotPellet.value,0.0)
-        
             pelletSDL = ageSDL[SDLGotPellet.value][0]
             if pelletSDL != gotPellet:
                 ageSDL[SDLGotPellet.value] = (gotPellet,)
-        
-            PtDebugPrint("PelletBahroCave:OnServerInitComplete:  SDL for pellet is now %d" % (gotPellet))
+            PtDebugPrint("PelletBahroCave:OnServerInitComplete: SDL for pellet is now %d" % (gotPellet))
 
 
     def OnSDLNotify(self,VARname,SDLname,playerID,tag):
@@ -208,8 +206,8 @@ class PelletBahroCave(ptResponder):
                     cam.undoFirstPerson()
         if type == PtBehaviorTypes.kBehaviorTypeLinkIn and not state:
             if lowerCave:
-                pass
-                #self.IPruneDrops()
+# pass
+                self.IPruneDrops()
             avatar = PtGetLocalAvatar()
             avatar.avatar.unRegisterForBehaviorNotify(self.key)
 
@@ -274,11 +272,85 @@ class PelletBahroCave(ptResponder):
             SymbolsOnSecs = 0
         elif id == 3:
             self.PlaySymbols(0)
+        elif id == 4:
+            if prune:
+                self.IPruneDrops()
+            self.ICheckTime()
 
 
-    def IDropUpper(self,recipe):       
-        print "in IDropUpper."
-        RespDropPellet.run(self.key,state="upper")
+    def IDropUpper(self,recipe):
+# print "in IDropUpper."
+# RespDropPellet.run(self.key,state="upper")
+        print 'in IDropUpper.'
+        RespDropPellet.run(self.key, state='upper')
+        DropTime = PtGetDniTime()
+        vault = ptVault()
+        entry = vault.findChronicleEntry('PelletDrops')
+        if (type(entry) != type(None)):
+            entryValue = entry.chronicleGetValue()
+            if (entryValue == ''):
+                entryValue = ('%d,%d' % (DropTime,
+                 recipe))
+            else:
+                entryValue += (';%d,%d' % (DropTime,
+                 recipe))
+            entry.chronicleSetValue(entryValue)
+            entry.save()
+            PtDebugPrint('Chronicle entry PelletDrops already added, setting to Recipe value')
+        else:
+            vault.addChronicleEntry('PelletDrops', 1, ('%d,%d' % (DropTime,
+             recipe)))
+            PtDebugPrint('Chronicle entry PelletDrops not present, adding entry and setting time and recipe values')
+
+    def IPruneDrops(self):
+        global prune
+        print 'in IPruneDrops.'
+        vault = ptVault()
+        entry = vault.findChronicleEntry('PelletDrops')
+        if (type(entry) != type(None)):
+            entryValue = entry.chronicleGetValue()
+            Droppings = entryValue.split(';')
+            print 'Droppings =',
+            print Droppings
+            resetChron = 0
+            newValue = ''
+            x = 0
+            if (Droppings[0] != ''):
+                for xPellet in Droppings:
+                    if (x != len(Droppings)):
+                        xPellet = xPellet.split(',')
+                    xTime = string.atoi(xPellet[0])
+                    xRecipe = string.atoi(xPellet[1])
+                    CurTime = (PtGetDniTime() - kTimeWarp)
+                    if (CurTime > xTime):
+                        resetChron = 1
+                    elif (not newValue):
+                        newValue = ('%d,%d' % (xTime,
+                         xRecipe))
+                    else:
+                        newValue += (';%d,%d' % (xTime,
+                         xRecipe))
+                    x += 1
+
+            if (not newValue):
+                print 'BahroCave02.IPruneDrops(): all dropped pellots are old, clearing chronicle. No pellets to be dropped.'
+                entry.chronicleSetValue('')
+                entry.save()
+                if prune:
+                    prune = 0
+            else:
+                if resetChron:
+                    print 'BahroCave02.IPruneDrops(): some pellets were pruned, but some still waiting to drop... revising chronicle'
+                    entry.chronicleSetValue(newValue)
+                    entry.save()
+                else:
+                    print 'BahroCave02.IPruneDrops(): no pellets were pruned, all are still waiting to drop... leaving chronicle alone'
+                print 'Pellets waiting to drop, chronicle =',
+                print newValue
+                if prune:
+                    prune = 0
+                else:
+                    self.ICheckTime()
 
 
     def GetPelletCaveSolution(self):
@@ -324,3 +396,30 @@ class PelletBahroCave(ptResponder):
                 respListSymbolsOff[n].run(self.key,state=symstate)
             n += 1
 
+    def ICheckTime(self):
+        global prune
+        print 'in ICheckTime.'
+        vault = ptVault()
+        entry = vault.findChronicleEntry('PelletDrops')
+        if (type(entry) != type(None)):
+            entryValue = entry.chronicleGetValue()
+            Droppings = entryValue.split(';')
+            xPellet = Droppings[0].split(',')
+            try:
+                xTime = string.atoi(xPellet[0])
+            except:
+                xTime = -1
+            CurTime = (PtGetDniTime() - kTimeWarp)
+            PtDebugPrint("xTime %d CurTime %d" % (xTime,CurTime))
+            if (CurTime == xTime):
+                xRecipe = string.atoi(xPellet[1])
+                self.IDropLower(xRecipe)
+                prune = 1
+            PtAtTimeCallback(self.key, 1, 4)
+
+
+    def IDropLower(self, recipe):
+        global gotPellet
+        print 'in IDropLower.'
+        gotPellet = recipe
+        RespDropPellet.run(self.key, state='lower')
